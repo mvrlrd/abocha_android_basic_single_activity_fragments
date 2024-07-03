@@ -60,6 +60,8 @@ dependencies {
 
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
 
+    implementation "androidx.compose.runtime:runtime-livedata:1.6.8"
+
     def nav_version = "2.7.7"
     def lifecycle_version = "2.5.1"
     implementation 'androidx.appcompat:appcompat:1.7.0'

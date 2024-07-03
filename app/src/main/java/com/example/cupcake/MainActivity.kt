@@ -41,7 +41,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             CupcakesApp(onToggleTheme = {
                 isLightTheme = !isLightTheme
             },
-                darkTheme = !isLightTheme,)
+                darkTheme = !isLightTheme,
+                this)
         }
 
         // Retrieve NavController from the NavHostFragment

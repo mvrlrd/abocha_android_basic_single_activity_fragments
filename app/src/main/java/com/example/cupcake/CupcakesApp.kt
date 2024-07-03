@@ -11,7 +11,7 @@ import com.example.cupcake.theme.CupecakesTheme
 typealias ThemeToggle = () -> Unit
 
 @Composable
-fun CupcakesApp(onToggleTheme: () -> Unit, darkTheme: Boolean) {
+fun CupcakesApp(onToggleTheme: () -> Unit, darkTheme: Boolean,context: Context) {
     CupecakesTheme(darkTheme = darkTheme) {
         val navController = rememberNavController()
         val viewModel = OrderViewModel()
@@ -20,7 +20,7 @@ fun CupcakesApp(onToggleTheme: () -> Unit, darkTheme: Boolean) {
                 StartScreen(viewModel = viewModel, navHostController = navController,)
             }
             composable(Routes.FlavorScreen.route){
-                FlavorScreen(viewModel = viewModel, navController = navController, )
+                FlavorScreen(viewModel = viewModel, navController = navController, context = context)
             }
 
         }

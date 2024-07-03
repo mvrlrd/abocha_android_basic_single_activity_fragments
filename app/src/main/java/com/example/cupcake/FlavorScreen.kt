@@ -1,6 +1,7 @@
 package com.example.cupcake
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +20,10 @@ import androidx.compose.material.OutlinedButton
 import androidx.compose.material.RadioButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
@@ -26,14 +31,23 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.asFlow
 import androidx.navigation.NavController
 import com.example.cupcake.model.OrderViewModel
 
 @Composable
-fun FlavorScreen(viewModel: OrderViewModel, navController: NavController?, ) {
-    val flavors = listOf("vanilla","chocolate")
-    val selectedFlavor = viewModel.flavor
-    val subtotal = viewModel.price
+fun FlavorScreen(viewModel: OrderViewModel, navController: NavController?, context: Context) {
+    val flavors = listOf(
+        context.resources.getString(R.string.vanilla),
+        context.resources.getString(R.string.chocolate),
+        context.resources.getString(R.string.coffee),
+        context.resources.getString(R.string.red_velvet),
+        context.resources.getString(R.string.salted_caramel),
+    )
+    val selectedFlavor by viewModel.flavor.observeAsState()
+
+    Log.d("TAG","recomposed  === flavor= ${selectedFlavor}")
+    val subtotal = viewModel.price.observeAsState(initial = 0)
 
     Column(
         modifier = Modifier
@@ -47,7 +61,7 @@ fun FlavorScreen(viewModel: OrderViewModel, navController: NavController?, ) {
                 .padding(bottom = dimensionResource(id = R.dimen.side_margin))
         ) {
             flavors.forEachIndexed { index, flavor ->
-                RadioButtonWithLabel2(selectedFlavor = selectedFlavor, flavor = flavor, viewModel = viewModel, label = flavor)
+                RadioButtonWithLabel2(selectedFlavor = selectedFlavor?:"", flavor = flavor, viewModel = viewModel, label = flavor)
             }
         }
 
@@ -58,7 +72,7 @@ fun FlavorScreen(viewModel: OrderViewModel, navController: NavController?, ) {
         )
 
         Text(
-            text = stringResource(R.string.subtotal_price, subtotal),
+            text = stringResource(R.string.subtotal_price, subtotal.value),
             style = MaterialTheme.typography.body1,
             modifier = Modifier
                 .padding(top = dimensionResource(id = R.dimen.side_margin))
@@ -91,13 +105,17 @@ fun FlavorScreen(viewModel: OrderViewModel, navController: NavController?, ) {
 }
 
 @Composable
-fun RadioButtonWithLabel2(selectedFlavor: LiveData<String>, flavor: String, viewModel: OrderViewModel, label: String){
+fun RadioButtonWithLabel2(selectedFlavor: String, flavor: String, viewModel: OrderViewModel, label: String){
     Row (
         verticalAlignment = Alignment.CenterVertically
     ){
         RadioButton(
-            selected = selectedFlavor.value == flavor,
-            onClick = { viewModel.setFlavor(flavor) },
+            selected = selectedFlavor == flavor,
+            onClick = {
+                Log.d("TAG", "chosen = $flavor")
+                viewModel.setFlavor(flavor)
+
+                      },
             modifier = Modifier.padding(bottom = 8.dp)
         )
         Text(text = label)
