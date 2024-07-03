@@ -13,6 +13,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.cupcake.model.OrderViewModel
 
 
 @Composable
@@ -36,30 +37,28 @@ fun StartScreen() {
             color = Color.Gray
         )
         Spacer(modifier = Modifier.height(16.dp))
-        Button(
-            onClick = {  },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp)
-        ) {
-            Text(text = stringResource(R.string.one_cupcake))
+        MyButton(text = stringResource(R.string.one_cupcake)) {
+
         }
-        Button(
-            onClick = { },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp)
-        ) {
-            Text(text = stringResource(R.string.six_cupcakes))
+        MyButton(text = stringResource(R.string.six_cupcakes)) {
+
         }
-        Button(
-            onClick = { },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp)
-        ) {
-            Text(text = stringResource(R.string.twelve_cupcakes))
+        MyButton(text = stringResource(R.string.twelve_cupcakes)) {
+
         }
+
+    }
+}
+
+@Composable
+fun MyButton(text: String, callback: ()->Unit){
+    Button(
+        onClick = { callback.invoke() },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp)
+    ) {
+        Text(text = text)
     }
 }
 
