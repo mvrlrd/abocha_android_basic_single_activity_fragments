@@ -1,129 +1,25 @@
 package com.example.cupcake
 
-import android.content.Context
-import android.util.Log
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.RadioButton
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asFlow
 import androidx.navigation.NavController
 import com.example.cupcake.model.OrderViewModel
+import com.example.cupcake.ui_kit.CommonLayout
+import com.example.cupcake.ui_kit.RadioButtonWithLabel
 
 @Composable
-fun FlavorScreen(viewModel: OrderViewModel, navController: NavController?, context: Context) {
-    val flavors = listOf(
-        context.resources.getString(R.string.vanilla),
-        context.resources.getString(R.string.chocolate),
-        context.resources.getString(R.string.coffee),
-        context.resources.getString(R.string.red_velvet),
-        context.resources.getString(R.string.salted_caramel),
-    )
-    val selectedFlavor by viewModel.flavor.observeAsState()
-
-    Log.d("TAG","recomposed  === flavor= ${selectedFlavor}")
-    val subtotal = viewModel.price.observeAsState(initial = 0)
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(dimensionResource(id = R.dimen.side_margin))
-            .verticalScroll(rememberScrollState())
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = dimensionResource(id = R.dimen.side_margin))
-        ) {
-            flavors.forEachIndexed { index, flavor ->
-                RadioButtonWithLabel2(selectedFlavor = selectedFlavor?:"", flavor = flavor, viewModel = viewModel, label = flavor)
-            }
-        }
-
-        Divider(
-            color = MaterialTheme.colors.background,
-            thickness = 1.dp,
-            modifier = Modifier.padding(vertical = dimensionResource(id = R.dimen.side_margin))
-        )
-
-        Text(
-            text = stringResource(R.string.subtotal_price, subtotal.value),
-            style = MaterialTheme.typography.body1,
-            modifier = Modifier
-                .padding(top = dimensionResource(id = R.dimen.side_margin))
-                .align(Alignment.End)
-        )
-
-        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.side_margin)))
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            OutlinedButton(
-                onClick = { navController?.navigate("cancel") },
-                modifier = Modifier.weight(1f)
-            ) {
-                Text(text = stringResource(R.string.cancel))
-            }
-
-            Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.side_margin)))
-
-            Button(
-                onClick = { navController?.navigate("next") },
-                modifier = Modifier.weight(1f)
-            ) {
-                Text(text = stringResource(R.string.next))
+fun FlavorScreen(sharedViewModel: OrderViewModel, navController: NavController) {
+    val flavors = stringArrayResource(R.array.flavors)
+    val selectedFlavor by sharedViewModel.flavor.observeAsState()
+    val subtotal by sharedViewModel.price.observeAsState(initial = 0)
+    CommonLayout(subtotal = subtotal.toString(), navController = navController) {
+        flavors.forEach { flavor ->
+            RadioButtonWithLabel(isSelected = selectedFlavor == flavor, label = flavor) {
+                sharedViewModel.setFlavor(it)
             }
         }
     }
-}
-
-@Composable
-fun RadioButtonWithLabel2(selectedFlavor: String, flavor: String, viewModel: OrderViewModel, label: String){
-    Row (
-        verticalAlignment = Alignment.CenterVertically
-    ){
-        RadioButton(
-            selected = selectedFlavor == flavor,
-            onClick = {
-                Log.d("TAG", "chosen = $flavor")
-                viewModel.setFlavor(flavor)
-
-                      },
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
-        Text(text = label)
-    }
-}
-
-@Composable
-@Preview
-fun PreviewFlavorScreen(){
-//    FlavorScreen(viewModel = OrderViewModel(), navController = null,)
 }

@@ -1,6 +1,5 @@
 package com.example.cupcake
 
-import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -11,7 +10,7 @@ import com.example.cupcake.theme.CupecakesTheme
 typealias ThemeToggle = () -> Unit
 
 @Composable
-fun CupcakesApp(onToggleTheme: () -> Unit, darkTheme: Boolean,context: Context) {
+fun CupcakesApp(onToggleTheme: () -> Unit, darkTheme: Boolean) {
     CupecakesTheme(darkTheme = darkTheme) {
         val navController = rememberNavController()
         val viewModel = OrderViewModel()
@@ -20,7 +19,10 @@ fun CupcakesApp(onToggleTheme: () -> Unit, darkTheme: Boolean,context: Context) 
                 StartScreen(viewModel = viewModel, navHostController = navController,)
             }
             composable(Routes.FlavorScreen.route){
-                FlavorScreen(viewModel = viewModel, navController = navController, context = context)
+                FlavorScreen(sharedViewModel = viewModel, navController = navController)
+            }
+            composable(Routes.PickupScreen.route){
+                PickupScreen(sharedViewModel = viewModel, navController = navController)
             }
 
         }

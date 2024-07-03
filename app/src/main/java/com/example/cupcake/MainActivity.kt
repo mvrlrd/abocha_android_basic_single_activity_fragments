@@ -41,8 +41,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             CupcakesApp(onToggleTheme = {
                 isLightTheme = !isLightTheme
             },
-                darkTheme = !isLightTheme,
-                this)
+                darkTheme = !isLightTheme,)
         }
 
         // Retrieve NavController from the NavHostFragment
@@ -56,7 +55,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     /**
      * Handle navigation when the user chooses Up from the action bar.
      */
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp() || super.onSupportNavigateUp()
-    }
+//    override fun onSupportNavigateUp(): Boolean {
+//        return navController.navigateUp() || super.onSupportNavigateUp()
+//    }
 }

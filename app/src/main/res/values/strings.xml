@@ -44,5 +44,14 @@
         <item quantity="other">%d cupcakes</item>
     </plurals>
 
+    <string-array name="flavors">
+        <item>Vanilla</item>
+        <item>Chocolate</item>
+        <item>Red Velvet</item>
+        <item>Salted Caramel</item>
+        <item>Coffee</item>
+        <!-- Добавьте столько элементов, сколько вам нужно -->
+    </string-array>
+
 
 </resources>
