@@ -27,7 +27,7 @@ import com.example.cupcake.model.OrderViewModel
 
 
 @Composable
-fun StartScreen(viewModel: OrderViewModel, navHostController: NavHostController) {
+fun StartScreen(viewModel: OrderViewModel, goToFlavorScreen: ()->Unit) {
 
     Column(
         modifier = Modifier
@@ -57,23 +57,22 @@ fun StartScreen(viewModel: OrderViewModel, navHostController: NavHostController)
             quantity = integerResource(id = R.integer.one_cup)
         ) {
             viewModel.setQuantity(it)
-            navHostController.navigate(Routes.FlavorScreen.route)
+            goToFlavorScreen.invoke()
         }
         MyButton(
             text = stringResource(R.string.six_cupcakes),
             quantity = integerResource(id = R.integer.six_cups)
         ) {
             viewModel.setQuantity(it)
-            navHostController.navigate(Routes.FlavorScreen.route)
+            goToFlavorScreen.invoke()
         }
         MyButton(
             text = stringResource(R.string.twelve_cupcakes),
             quantity = integerResource(id = R.integer.twelve_cups)
         ) {
             viewModel.setQuantity(it)
-            navHostController.navigate(Routes.FlavorScreen.route)
+            goToFlavorScreen.invoke()
         }
-
     }
 }
 

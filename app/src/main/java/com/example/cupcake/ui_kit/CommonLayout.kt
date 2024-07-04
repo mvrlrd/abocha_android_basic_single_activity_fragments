@@ -29,7 +29,8 @@ import com.example.cupcake.Routes
 @Composable
 fun CommonLayout(
     subtotal: String,
-    navController: NavController,
+    onCancelOrder: ()->Unit,
+    onClickNext: ()->Unit,
     radioButtons: @Composable () -> Unit
 ) {
     Column(
@@ -67,7 +68,7 @@ fun CommonLayout(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             OutlinedButton(
-                onClick = { navController.navigate(Routes.StartScreen.route) },
+                onClick =  onCancelOrder,
                 modifier = Modifier.weight(1f)
             ) {
                 Text(text = stringResource(R.string.cancel))
@@ -76,7 +77,7 @@ fun CommonLayout(
             Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.side_margin)))
 
             Button(
-                onClick = { navController.navigate(Routes.PickupScreen.route) },
+                onClick = onClickNext,
                 modifier = Modifier.weight(1f)
             ) {
                 Text(text = stringResource(R.string.next))

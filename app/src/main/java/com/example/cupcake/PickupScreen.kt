@@ -10,10 +10,17 @@ import com.example.cupcake.ui_kit.RadioButtonWithLabel
 
 
 @Composable
-fun PickupScreen(sharedViewModel: OrderViewModel, navController: NavController) {
+fun PickupScreen(
+    sharedViewModel: OrderViewModel,
+    onCancelOrder: () -> Unit,
+    onClickNext:()->Unit
+) {
     val selectedDate by sharedViewModel.date.observeAsState(initial = "")
     val subtotal by sharedViewModel.price.observeAsState(initial = 0)
-    CommonLayout(subtotal = subtotal.toString(), navController = navController) {
+    CommonLayout(
+        subtotal = subtotal.toString(),
+        onCancelOrder = onCancelOrder,
+        onClickNext = onClickNext) {
         sharedViewModel.dateOptions.forEach { date ->
             RadioButtonWithLabel(isSelected = selectedDate == date, label = date) {
                 sharedViewModel.setDate(it)

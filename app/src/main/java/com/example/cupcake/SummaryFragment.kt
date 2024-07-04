@@ -17,6 +17,7 @@ package com.example.cupcake
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -73,6 +74,7 @@ class SummaryFragment : Fragment() {
             sharedViewModel.price.value.toString()
         )
 
+        Log.d("TAG", "orderSummary = $orderSummary")
         // Create an ACTION_SEND implicit intent with order details in the intent extras
         val intent = Intent(Intent.ACTION_SEND)
             .setType("text/plain")
