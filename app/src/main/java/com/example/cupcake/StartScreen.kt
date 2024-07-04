@@ -86,6 +86,6 @@ fun MyButton(text: String, quantity: Int, callback: (Int)->Unit){
             .padding(vertical = 8.dp)
             .widthIn(min = 250.dp)
     ) {
-        Text(text = text)
+        Text(text = text.uppercase())
     }
 }
