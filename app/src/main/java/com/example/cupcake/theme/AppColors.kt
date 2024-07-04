@@ -5,7 +5,7 @@ import androidx.compose.material.lightColors
 import androidx.compose.ui.graphics.Color
 
 object AppColors {
-    val primary = Color(0xFF3366FF)
+    val primary = Color(0xFFD81B60)
     val background = Color(0xFFE7E7E7)
     val backgroundReverse = Color(0xFF141414)
     val iconColor = Color(0xFF141414)
