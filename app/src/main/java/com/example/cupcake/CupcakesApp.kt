@@ -17,7 +17,10 @@ fun CupcakesApp(onToggleTheme: () -> Unit, darkTheme: Boolean, context: Context)
     CupecakesTheme(darkTheme = darkTheme) {
         val navController = rememberNavController()
         val viewModel = OrderViewModel()
-        val onCancelOrder = {navController.navigate(Routes.StartScreen.route)}
+        val onCancelOrder = {
+            viewModel.resetOrder()
+            navController.navigate(Routes.StartScreen.route)
+        }
         NavHost(navController = navController, startDestination = Routes.StartScreen.route){
             composable(Routes.StartScreen.route){
                 StartScreen(viewModel = viewModel, goToFlavorScreen = {navController.navigate(Routes.FlavorScreen.route)})
