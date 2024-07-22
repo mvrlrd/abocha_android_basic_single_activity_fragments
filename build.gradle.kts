@@ -23,21 +23,18 @@ allprojects {
         mavenCentral()
     }
 
-    tasks.withType< org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask<*>>().configureEach {
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask<*>>().configureEach {
         compilerOptions {
             allWarningsAsErrors = false
-
             freeCompilerArgs.addAll(
                 "-P",
-                "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination="+
-                layout.buildDirectory.asFile.get().absolutePath + "/compose_metrics",
-
-            )
-            freeCompilerArgs.addAll(
-                "-P",
-                "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination="+
+                "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" +
                         layout.buildDirectory.asFile.get().absolutePath + "/compose_metrics",
-
+                )
+            freeCompilerArgs.addAll(
+                "-P",
+                "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" +
+                        layout.buildDirectory.asFile.get().absolutePath + "/compose_metrics",
                 )
         }
     }
