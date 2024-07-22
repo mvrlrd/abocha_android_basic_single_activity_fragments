@@ -3,6 +3,7 @@ package com.example.cupcake
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -11,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -20,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.cupcake.model.OrderViewModel
+import com.example.cupcake.theme.AppColors
 
 @Composable
 fun SummaryScreen(
@@ -54,7 +57,7 @@ fun SummaryScreen(
 //                .focusable(true)
         ) {
             Text(
-                text = "Quantity",
+                text = stringResource(id = R.string.quantity),
                 style = MaterialTheme.typography.subtitle1.copy(fontSize = 14.sp),
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Start
@@ -64,10 +67,15 @@ fun SummaryScreen(
                 style = MaterialTheme.typography.body1.copy(fontSize = 18.sp),
                 modifier = Modifier.padding(top = 8.dp)
             )
-            Divider(modifier = Modifier.padding(vertical = 16.dp))
+            Divider(
+                color = AppColors.lines,
+                thickness = 1.dp,
+                modifier = Modifier.padding(vertical = dimensionResource(id = R.dimen.side_margin))
+            )
+
 
             Text(
-                text = "Flavor",
+                text = stringResource(id = R.string.flavor) ,
                 style = MaterialTheme.typography.subtitle1.copy(fontSize = 14.sp),
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Start
@@ -77,10 +85,14 @@ fun SummaryScreen(
                 style = MaterialTheme.typography.body1.copy(fontSize = 18.sp),
                 modifier = Modifier.padding(top = 8.dp)
             )
-            Divider(modifier = Modifier.padding(vertical = 16.dp))
+            Divider(
+                color = AppColors.lines,
+                thickness = 1.dp,
+                modifier = Modifier.padding(vertical = dimensionResource(id = R.dimen.side_margin))
+            )
 
             Text(
-                text = "Pickup Date",
+                text = stringResource(id = R.string.pickup_date),
                 style = MaterialTheme.typography.subtitle1.copy(fontSize = 14.sp),
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Start
@@ -90,22 +102,17 @@ fun SummaryScreen(
                 style = MaterialTheme.typography.body1.copy(fontSize = 18.sp),
                 modifier = Modifier.padding(top = 8.dp)
             )
-            Divider(modifier = Modifier.padding(vertical = 16.dp))
+            Divider(
+                color = AppColors.lines,
+                thickness = 1.dp,
+                modifier = Modifier.padding(vertical = dimensionResource(id = R.dimen.side_margin))
+            )
 
             Text(
-                text = "Total",
+                text = stringResource(id = R.string.total_price, price.toString()),
                 style = MaterialTheme.typography.h6,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 16.dp),
-                textAlign = TextAlign.End
-            )
-            Text(
-                text = price.toString(),
-                style = MaterialTheme.typography.h5,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 16.dp),
+                    .fillMaxWidth(),
                 textAlign = TextAlign.End
             )
         }
@@ -116,25 +123,25 @@ fun SummaryScreen(
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp)
+                .padding(bottom = 16.dp)
         ) {
-            Text(text = "Send")
+            Text(text = stringResource(id = R.string.send_to_another_app).uppercase())
         }
 
         OutlinedButton(
-            onClick = onCancelOrder,
+            onClick =  onCancelOrder,
+            colors = ButtonDefaults.buttonColors(backgroundColor = AppColors.background, contentColor = AppColors.primary),
+            border = BorderStroke(0.3.dp, AppColors.lines),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp)
         ) {
-            Text(text = "Cancel")
+            Text(text = stringResource(R.string.cancel).uppercase())
         }
     }
 }
 
 private fun sendOrder(context: Context, orderSummary: String) {
     // Construct the order summary text with information from the view model
-    Log.d("TAG","sendOrder = $orderSummary")
     // Create an ACTION_SEND implicit intent with order details in the intent extras
     val intent = Intent(Intent.ACTION_SEND)
         .setType("text/plain")
