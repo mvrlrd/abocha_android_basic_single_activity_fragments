@@ -1,5 +1,7 @@
 package com.example.cupcake.ui_kit
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,6 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
@@ -19,12 +22,14 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.cupcake.R
 import com.example.cupcake.Routes
+import com.example.cupcake.theme.AppColors
 
 @Composable
 fun CommonLayout(
@@ -48,7 +53,7 @@ fun CommonLayout(
         }
 
         Divider(
-            color = MaterialTheme.colors.error,
+            color = AppColors.lines,
             thickness = 1.dp,
             modifier = Modifier.padding(vertical = dimensionResource(id = R.dimen.side_margin))
         )
@@ -69,9 +74,12 @@ fun CommonLayout(
         ) {
             OutlinedButton(
                 onClick =  onCancelOrder,
-                modifier = Modifier.weight(1f)
+                colors = ButtonDefaults.buttonColors(backgroundColor = AppColors.background, contentColor = AppColors.primary),
+                border = BorderStroke(0.3.dp, AppColors.lines), // Устанавливаем рамку
+                modifier = Modifier
+                    .weight(1f)
             ) {
-                Text(text = stringResource(R.string.cancel))
+                Text(text = stringResource(R.string.cancel).uppercase())
             }
 
             Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.side_margin)))
@@ -80,7 +88,7 @@ fun CommonLayout(
                 onClick = onClickNext,
                 modifier = Modifier.weight(1f)
             ) {
-                Text(text = stringResource(R.string.next))
+                Text(text = stringResource(R.string.next).uppercase())
             }
         }
     }

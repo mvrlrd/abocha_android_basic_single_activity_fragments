@@ -1,12 +1,16 @@
 package com.example.cupcake.theme
 
 import androidx.compose.material.Colors
+import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.ui.graphics.Color
 
 object AppColors {
-    val primary = Color(0xFFD81B60)
-    val background = Color(0xFFE7E7E7)
+    val primary = Color(0xFFD81B60) // buttons
+    val secondary = Color(0xFFAB47BC) // radiobuttons circle
+    val lines = Color.LightGray
+
+    val background = Color(0xFFFFFFFF)
     val backgroundReverse = Color(0xFF141414)
     val iconColor = Color(0xFF141414)
     val iconColorReverse = Color(0xFFFFFFFF)
@@ -44,7 +48,7 @@ interface ColorPalette {
     val iconColor: Color
     val dark: Color
     val transparent: Color
-
+    val lines: Color
     val materialColors: Colors
 }
 
@@ -65,11 +69,13 @@ fun lightColorPalette(): ColorPalette = object : ColorPalette {
     override val iconColor: Color = AppColors.iconColor
     override val dark: Color = AppColors.dark
     override val transparent: Color = AppColors.transparent
+    override val lines: Color = AppColors.lines
 
     override val materialColors: Colors = lightColors(
         primary = AppColors.primary,
         surface = AppColors.backgroundReverse,
-        onSurface = AppColors.textReverse
+        onSurface = AppColors.textReverse,
+        secondary = AppColors.secondary,
     )
 }
 
@@ -90,10 +96,13 @@ fun darkColorPalette(): ColorPalette = object : ColorPalette {
     override val dark: Color = AppColors.dark
     override val iconColor: Color = AppColors.iconColorReverse
     override val transparent: Color = AppColors.transparent
+    override val lines: Color = AppColors.lines
 
-    override val materialColors: Colors = lightColors(
+
+    override val materialColors: Colors = darkColors(
         primary = AppColors.primary,
         surface = AppColors.background,
-        onSurface = AppColors.textReverse
+        onSurface = AppColors.textReverse,
+        secondary = AppColors.secondary,
     )
 }
